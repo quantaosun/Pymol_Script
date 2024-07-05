@@ -2,6 +2,8 @@
 
 ![image](https://github.com/quantaosun/Pymol_Script/assets/75652473/6ece4655-004e-44ae-979b-fbc2277a10b5)
 
+(CRYSTAL STRUCTURE OF THE SARS-COV-2 (2019-NCOV) MAIN PROTEASE IN COMPLEX WITH COMPOUND 4, published by Jorgensen, W.L. et al.)
+
 
 This straightforward and robust script equips you to generate protein-ligand interaction images effortlessly. 
 You can use this for both docked structures and PDB bank structures. All you need to modify is to 
