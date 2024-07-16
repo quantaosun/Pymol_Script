@@ -53,9 +53,9 @@ set label_color, grey
 ##The next solution is to display the HYDOPHOBIC interaction (but it will only finish some of the work; mainly, make the pseudostem for you automatically).
 # First generate pseudo atoms/ please adjust accordingly
 #select /tmp//A/PHE`241/CD2 | /tmp//A/PHE`241/CE2 | /tmp//A/PHE`241/CZ | /tmp//A/PHE`241/CE1 | /tmp//A/PHE`241/CD1 | /tmp//A/PHE`49/CG ##Change to your own site #numbers!
-pseudoatom pi_center, sele
-select res, pi_center
-show sphere, pi_center
+#pseudoatom pi_center, sele
+#select res, pi_center
+#show sphere, pi_center
 set sphere_scale, 0.25
 set sphere_color, cyan
 
