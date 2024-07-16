@@ -8,11 +8,12 @@
 This straightforward and robust script equips you to generate protein-ligand interaction images effortlessly. 
 You can use this for both docked structures and PDB bank structures. All you need to modify is to 
 
-1. rename your protein-ligand structure to be ```output.pdb``` 
+1. rename your protein-ligand structure to be ```output.pdb``` , note all PDB naturally do not contain any H atoms, so you should either use third-party software to preapre the
+   structure to add H, or use the ```h_add``` command of pymol to do so.
 
-2. Change the ligand name ```UNL``` to your ligand name; it has to be a three-letter string.
+3. Change the ligand name ```UNL``` to your ligand name; it has to be a three-letter string.
 
-3. The pseudo atoms section must be customised for any hydrophobic staking or Pi-cation/edge interactions.
+4. The pseudo atoms section must be customised for any hydrophobic staking or Pi-cation/edge interactions.
 
 Put your renamed ```output.pdb``` and copy this script. Save it as a file with a ```pml``` suffix format. Then, use PyMol open your pdb file, then click ```run script``` and select the pml file.
 
