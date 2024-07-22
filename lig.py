@@ -52,6 +52,7 @@
 #  party software.                                          #
 #                                                           #
 #############################################################
+
 from pymol import cmd
 
 def lig(ligand):
@@ -120,6 +121,19 @@ def lig(ligand):
     cmd.select("res")
     cmd.hide("(h. and (e. c extend 1))")
     
+    # Define polar atoms (N and O) with neighboring hydrogens
+    cmd.select("polar_donors", "(elem n,o and (neighbor hydro))")
+    cmd.select("polar_acceptors", "(elem o or (elem n and not (neighbor hydro)))")
+
+    # Select hydrogen atoms bonded to polar donors
+    cmd.select("don_hydrogens", "hydro and (neighbor (polar_donors))")
+
+    # Show hydrogen bonds between acceptors and donor hydrogens
+    cmd.distance("hbonds", "don_hydrogens", "polar_acceptors", 3.2)
+    cmd.set("dash_color", "green")
+    cmd.set("dash_width", 2.0)
+    cmd.set("dash_gap", 0.5)
+
     # Set background white
     cmd.bg_color("white")
     
