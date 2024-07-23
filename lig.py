@@ -35,7 +35,7 @@
 #  Go to the PyMOL command line.                            #
 #  Type exactly:                                            #
 #                                                           #
-#                       ABC                                 #
+#                   lig ABC                                 #
 #                                                           #
 #############################################################
 #############################################################
@@ -72,6 +72,9 @@ def lig(ligand):
     # This distance was set to 5 angstroms
     # Set the ligand to a lig object
     cmd.select("lig", f"resn {ligand}")
+    
+    # Select all to hide
+    cmd.select("all")
     
     # Hide everything
     cmd.hide("everything")
@@ -129,7 +132,24 @@ def lig(ligand):
     # Delete non-polar H
     cmd.select("res")
     cmd.hide("(h. and (e. c extend 1))")
+    ####################################################################
+    # If you enable this section, ALL hydrogen bonds will be overwhelmingly displayed.
+    ####################################################################
+    # Define polar atoms (N and O) with neighboring hydrogens
+    # cmd.select("polar_donors", "(res and elem n,o and (neighbor hydro))")
+    # cmd.select("polar_acceptors", "(lig and elem o or (elem n and not (neighbor hydro)))")
 
+    # Select hydrogen atoms bonded to polar donors
+    # cmd.select("don_hydrogens", "hydro and (neighbor polar_donors)")
+    ####################################################################
+    # In the next section, four variables have been defined that belong
+    # to two pairs. The first pair is those hydrogen bonds with a direction from
+    # protein to ligand, while the second pair is vice versa.
+    # Please note, the resulting hydrogen bonds might not make sense
+    # since these bonds are only based on proximity. You might need to 
+    # delete undesired ones. Nevertheless, it is a good quick way to 
+    # get an idea of the interactions.
+    ####################################################################
     # Define polar donors in the protein and ligand
     cmd.select("polar_donors_res", "(res and elem n,o and (neighbor hydro))")
     cmd.select("polar_donors_lig", "(lig and elem n,o and (neighbor hydro))")
@@ -147,7 +167,10 @@ def lig(ligand):
     
     # Show hydrogen bonds between ligand donors and protein acceptors
     cmd.distance("hbonds_lig_to_res", "don_hydrogens_lig", "polar_acceptors_res", 3.2)
-    
+    #########################################################
+    # Show hydrogen bonds between acceptors and donor hydrogens
+    # cmd.distance("hbonds", "don_hydrogens", "polar_acceptors", 3.2)
+ 
     cmd.set("dash_color", "green")
     cmd.set("dash_width", 2.0)
     cmd.set("dash_gap", 0.5)
@@ -166,16 +189,10 @@ def lig(ligand):
 
     print("Script execution finished.")
 
-def process_input(arg):
+def lig_cmd(arg):
     lig(arg)
 
-cmd.extend("process_input", process_input)
-
-# Usage: After loading this script, you can type the ligand name directly in the PyMOL command line
-def on_input(args):
-    lig(args)
-
-cmd.extend('lig', on_input)
+cmd.extend("lig", lig_cmd)
 
 if __name__ == "__main__":
     import sys
