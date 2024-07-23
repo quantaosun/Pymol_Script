@@ -66,7 +66,8 @@ from pymol import cmd
 
 def lig(ligand):
     # Select the ligand and its surroundings
-    cmd.remove("sol")
+    #cmd.remove("sol")
+    cmd.hide("(hydro)")
     cmd.select("ligand", f"resn {ligand}")
     cmd.select("res", "byres ligand around 5")
     # This distance was set to 5 angstroms
@@ -126,12 +127,18 @@ def lig(ligand):
     cmd.set("dash_gap", 0.3)
     
     # Show the hydrogens
-    cmd.h_add("res")
-    cmd.h_add("lig")
+    ### This section try to detect whether there is already
+    ### H added to the structure, if not, it try to guess H 
+    ### positions using h_add.
+    if not cmd.count_atoms("res and hydro"):
+        cmd.h_add("res")
+    if not cmd.count_atoms("lig and hydro"):
+        cmd.h_add("lig")
     
     # Delete non-polar H
     cmd.select("res")
     cmd.hide("(h. and (e. c extend 1))")
+    
     ####################################################################
     # If you enable this section, ALL hydrogen bonds will be overwhelmingly displayed.
     ####################################################################
@@ -171,7 +178,7 @@ def lig(ligand):
     # Show hydrogen bonds between acceptors and donor hydrogens
     # cmd.distance("hbonds", "don_hydrogens", "polar_acceptors", 3.2)
  
-    cmd.set("dash_color", "green")
+    cmd.set("dash_color", "yellow")
     cmd.set("dash_width", 2.0)
     cmd.set("dash_gap", 0.5)
 
@@ -187,6 +194,13 @@ def lig(ligand):
     cmd.png("binding_pocket.png")
     cmd.save("pre_pymol.pse")
 
+    #################################################################
+    #### This section is for docked poses, but it does no harm to PDB bank structures.
+    ### The reason is to fix the H disappear issue with docked poses.
+    cmd.show("licorice", "res")
+    cmd.show("licorice", "lig")
+    #cmd.hide("hydrogens", "res and (elem H and neighbor elem C)")
+    cmd.hide("(elem H and neighbor elem C)")
     print("Script execution finished.")
 
 def lig_cmd(arg):
