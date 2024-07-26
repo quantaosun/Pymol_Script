@@ -31,3 +31,27 @@
 ![image](https://github.com/user-attachments/assets/61104e76-837f-458b-b4f4-d93333ed9458)
 
 (CRYSTAL STRUCTURE OF THE SARS-COV-2 (2019-NCOV) MAIN PROTEASE IN COMPLEX WITH COMPOUND 4, published by Jorgensen, W.L. et al.)
+
+## The surface generation was not included in lig.py
+
+```python
+    # Create a new object for the pocket residues
+    cmd.create("pocket_surface", "res")
+
+    # Hide the original surface to avoid confusion
+    cmd.hide("surface", "all")
+
+    # Show the surface of the new pocket object
+    cmd.show("surface", "pocket_surface")
+
+    # Color the surface: red for oxygen (polar), blue for nitrogen (polar), and white for carbon (non-polar)
+    cmd.color("red", "pocket_surface and elem O")
+    cmd.color("blue", "pocket_surface and elem N")
+    cmd.color("white", "pocket_surface and elem C")
+
+    # Adjust the transparency of the pocket surface
+    cmd.set("transparency", 0.5, "pocket_surface")
+
+    # Zoom in on the pocket for a better view
+    cmd.zoom("pocket_surface")
+```
